@@ -1,0 +1,67 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+@inject StateContainer stateContainer
+@inject HttpClient httpClient;
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <EditForm Model="@userForm" OnValidSubmit="@Submit" Context="formContext">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <InputText class="form-control" @bind-Value="@userForm.Name" placeholder="Your name"></InputText>
+                <button class="btn btn-primary" type="Submit" data-bs-dismiss="modal">
+                    Enter
+                </button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+
+@if (stateContainer.userName == string.Empty)
+{
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Enter chat hub</button>
+}
+else
+{
+    <ChatWindow />
+        if (stateContainer.ToUser.UserName != string.Empty && stateContainer.me.UserName != string.Empty)
+        {
+            var messages = stateContainer.me.messages.Where(a => a.Key == stateContainer.ToUser?.UserName).FirstOrDefault();
+            if (messages.Value != null)
+            {
+                foreach (var message in messages.Value)
+                {
+                <p>@message</p>
+                }
+            }
+        }
+    }
+
+@code
+{
+
+    private EditFormUser userForm = new EditFormUser();
+
+    protected override void OnInitialized()
+    {
+        stateContainer.OnMessageReceiveEvent += MessageReceiveEventHandler;
+    }
+
+    private void MessageReceiveEventHandler(object? sender, EventArgs eventArgs)
+    {
+        StateHasChanged();
+    }
+
+    private async Task Submit()
+    {
+        var token = await httpClient.PostAsync($"authenticate/{userForm.Name}",null);
+        stateContainer.token = await token.Content.ReadAsStringAsync();
+        stateContainer.userName = userForm.Name;
+        await stateContainer.OnConnectAsync();
+    }
+
+}

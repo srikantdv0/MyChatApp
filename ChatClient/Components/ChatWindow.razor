@@ -1,0 +1,8 @@
+﻿
+
+<EditForm Model="@chatForm" OnSubmit="@Submit" Context="formContext">
+    <InputText class="form-control" @bind-Value="@chatForm.Message"></InputText>
+    <button class="btn btn-primary" type="Submit">
+        Send
+    </button>
+</EditForm>

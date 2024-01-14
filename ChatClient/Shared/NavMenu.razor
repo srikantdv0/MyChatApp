@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@inject StateContainer stateContainer
+@implements IDisposable
+
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">ChatClient</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+
+
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+        <nav class="flex-column">
+            @foreach (var user in stateContainer.userList)
+            {
+                <NavLink class="nav-link" href="" @onclick="@(()=>SetToUser(user.Value))" Match="NavLinkMatch.All">
+                    @user.Value.UserName
+                </NavLink>
+            }
+
+        </nav>
+    </div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+
+    private void SetToUser(User toUser)
+    {
+        stateContainer.SetToUser(toUser); ;
+    }
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        stateContainer.userConnectionEvent += OnUserConnectionEvent;
+
+    }
+
+    private void OnUserConnectionEvent(object? sender, EventArgs eventArgs)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        stateContainer.userConnectionEvent -= OnUserConnectionEvent;
+    }
+
+    }
+
