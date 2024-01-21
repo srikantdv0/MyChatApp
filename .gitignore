@@ -404,6 +404,14 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+
+ChatClient/bin/
+ChatClientLogging/
+ChatClient/obj/
+ChatHub/bin/
+ChatHub/obj/
+ChatShared/bin/
+ChatShared/obj/
 .vs/
 .git/
 .github/
