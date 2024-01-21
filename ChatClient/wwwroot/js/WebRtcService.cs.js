@@ -2,14 +2,14 @@
 "use strict";
 // Set up media stream constant and parameters.
 const mediaStreamConstraints = {
-    video: true
-    //audio: true
+    video: true,
+    audio: true
 };
 
 // Set up to exchange only video.
 const offerOptions = {
-    offerToReceiveVideo: 1
-    //offerToReceiveAudio: 1
+    offerToReceiveVideo: 1,
+    offerToReceiveAudio: 1
 };
 
 const servers = {
