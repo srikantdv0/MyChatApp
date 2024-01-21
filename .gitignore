@@ -7,6 +7,5 @@ ChatHub/obj/
 ChatShared/bin/
 ChatShared/obj/
 .vs/
+.github/workflows/master_chatroomapp.yml
 .git/
-.github/
-.github/workflows/
