@@ -72,6 +72,7 @@ public class Program
         app.MapControllers();
        
         app.MapHub<ChatHub.Hubs.ChatHub>("/chatHub");
+        app.MapHub<ChatHub.Hubs.MessageHub>("/messagehub");
         app.MapFallbackToFile("index.html");
 
         app.Run();

@@ -54,6 +54,7 @@ namespace ChatHub.Hubs
             await base.OnConnectedAsync();
             }
 
+
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             await RemoveFromUserList(Context.ConnectionId);

@@ -31,5 +31,9 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Components\" />
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\" />
   </ItemGroup>
 </Project>

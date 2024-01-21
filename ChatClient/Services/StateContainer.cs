@@ -3,8 +3,7 @@ using System.Reflection;
 using ChatShared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-
-
+using Microsoft.JSInterop;
 
 namespace ChatClient.Services
 {
@@ -12,12 +11,14 @@ namespace ChatClient.Services
     {
 
         private NavigationManager _navigationManager;
-        private HubConnection? hubConnection;
+        public HubConnection? hubConnection;
         public Dictionary<string,User> userList = new Dictionary<string, User>();
         public User me = new User { };
         public User ToUser = new User { };
         public string userName { get; set; } = String.Empty;
         public string token { get; set; } = String.Empty;
+
+
 
         public StateContainer(NavigationManager navigationManager)
         {
@@ -57,7 +58,8 @@ namespace ChatClient.Services
                 me.messages[username].Add(message);
                 OnMessageReceiveEvent?.Invoke(this, EventArgs.Empty);
             });
-            
+
+
             await hubConnection.StartAsync();
 
             if (hubConnection is not null)
