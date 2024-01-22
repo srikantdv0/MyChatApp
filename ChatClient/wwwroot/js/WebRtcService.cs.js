@@ -13,13 +13,14 @@ const offerOptions = {
 };
 
 const servers = {
-    iceServers: [
-        {
-            urls: "turn:coturn.myserver.com:3478",
-            username: "username",
-            credential: "password"
-        }
-    ]
+    //iceServers: [
+    //    {
+    //        urls: "turn:coturn.myserver.com:3478",
+    //        username: "username",
+    //        credential: "password"
+    //    }
+    //]
+    "iceServers": [{ "url": "stun:stun.l.google.com:19302" }] 
 }
 
 let dotNet;
@@ -52,6 +53,7 @@ function createPeerConnection() {
 
     // Add local stream to connection and create offer to connect.
     peerConnection.addStream(localStream);
+    //localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream))
     console.log("Added local stream to peerConnection.");
 }
 
